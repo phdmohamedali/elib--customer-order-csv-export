@@ -753,7 +753,8 @@ class Automation extends \WC_Data {
 			case \WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS:
 
 				$export_new_orders_only = $this->is_new_only_enabled();
-
+				// ATIF export only forlse for export all
+				$export_new_orders_only = false;
 				/**
 				 * Filters whether only new orders should be auto-exported for the given output type.
 				 *
