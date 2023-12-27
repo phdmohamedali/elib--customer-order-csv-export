@@ -17,7 +17,7 @@
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
  * @author      SkyVerge
- * @copyright   Copyright (c) 2015-2022, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright   Copyright (c) 2015-2023, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -402,7 +402,7 @@ class List_Table extends \WP_List_Table {
 	/**
 	 * Gets the list table columns.
 	 *
-	 * @since 5.5.0-dev.1
+	 * @since 5.5.0
 	 *
 	 * @return array
 	 */
@@ -422,7 +422,7 @@ class List_Table extends \WP_List_Table {
 		/**
 		 * Filters the automations list table columns.
 		 *
-		 * @since 5.5.0-dev.1
+		 * @since 5.5.0
 		 *
 		 * @param array $columns list table columns
 		 */

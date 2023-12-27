@@ -17,7 +17,7 @@
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
  * @author      SkyVerge
- * @copyright   Copyright (c) 2015-2022, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright   Copyright (c) 2015-2023, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) or exit;
 use SkyVerge\WooCommerce\CSV_Export\Automations\Automation;
 use SkyVerge\WooCommerce\CSV_Export\Automations\Automation_Factory;
 use SkyVerge\WooCommerce\CSV_Export\Taxonomies_Handler;
-use SkyVerge\WooCommerce\PluginFramework\v5_10_13 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_11_6 as Framework;
 
 /**
  * Customer/Order CSV Export Handler
@@ -114,7 +114,7 @@ class WC_Customer_Order_CSV_Export_Handler {
 			// get method (download, FTP, etc)
 			$export = wc_customer_order_csv_export()->get_methods_instance()->get_export_method( $method, $export_type, '', $output_type, $method_args );
 
-			if ( ! is_object( $export ) ) {
+			if ( ! $export instanceof WC_Customer_Order_CSV_Export_Method ) {
 
 				/** translators: %s - export method identifier */
 				throw new Framework\SV_WC_Plugin_Exception( sprintf( __( 'Invalid Export Method: %s', 'woocommerce-customer-order-csv-export' ), $method ) );
@@ -126,9 +126,9 @@ class WC_Customer_Order_CSV_Export_Handler {
 			// simple test file
 			if ( $export->perform_action( $temp_file ) ) {
 				return [ __( 'Test was successful!', 'woocommerce-customer-order-csv-export' ), 'success' ];
-			} else {
-				return [ __( 'Test failed!', 'woocommerce-customer-order-csv-export' ), 'error' ];
 			}
+
+			return [ __( 'Test failed!', 'woocommerce-customer-order-csv-export' ), 'error' ];
 
 		} catch ( Framework\SV_WC_Plugin_Exception $e ) {
 
@@ -181,7 +181,7 @@ class WC_Customer_Order_CSV_Export_Handler {
 		// source is a path to existing file
 		} elseif ( is_string( $source ) && is_readable( $source ) ) {
 
-			copy( $source, $filename  );
+			copy( $source, $filename );
 
 		// if not a readable source file, it's most likely just raw data
 		} else {
@@ -190,7 +190,7 @@ class WC_Customer_Order_CSV_Export_Handler {
 			touch( $filename );
 
 			// open the file, write file, and close it
-			$fp = @fopen( $filename, 'w+');
+			$fp = @fopen( $filename, 'w+' );
 
 			@fwrite( $fp, $source );
 			@fclose( $fp );
@@ -248,13 +248,13 @@ class WC_Customer_Order_CSV_Export_Handler {
 	 *
 	 * @return bool
 	 */
-	public function is_order_exported( $order, $automation_id = null ) {
+	public function is_order_exported( $order, $automation_id = null ) : bool {
 
 		// if no automation ID is given, check for the global term
 		$term = ! empty( $automation_id ) ? Taxonomies_Handler::TERM_PREFIX . $automation_id : Taxonomies_Handler::GLOBAL_TERM;
-		$post = get_post( $order->get_id() );
 
-		return has_term( $term, Taxonomies_Handler::TAXONOMY_NAME_ORDERS, $post );
+		// ATIF: check if the order is already exported always returns false
+		return has_term( $term, Taxonomies_Handler::TAXONOMY_NAME_ORDERS, $order->get_id() ) and false ;
 	}
 
 
@@ -1152,7 +1152,7 @@ class WC_Customer_Order_CSV_Export_Handler {
 
 			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
 
-				wc_customer_order_csv_export()->log( sprintf('Scheduled automated export failed: %s', $exception->getMessage() ) );
+				wc_customer_order_csv_export()->log( sprintf( 'Scheduled automated export failed: %s', $exception->getMessage() ) );
 			}
 		}
 	}

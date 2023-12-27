@@ -17,7 +17,7 @@
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
  * @author      SkyVerge
- * @copyright   Copyright (c) 2015-2022, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright   Copyright (c) 2015-2023, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -30,7 +30,8 @@ defined( 'ABSPATH' ) or exit;
  * @version 4.0.0
  */
 
-global $current_tab, $current_section, $output_type, $export_type;
+global $current_tab, $output_type, $export_type;
+
 ?>
 
 <script type="text/template" id="tmpl-wc-customer-order-csv-export-modal">
@@ -373,7 +374,7 @@ global $current_tab, $current_section, $output_type, $export_type;
 
 		<?php
 
-			$export_type = isset( $current_section ) ? $current_section : WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS;
+			$export_type = $export_type ?? WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS;
 
 			$format_options = [
 				'default' => __( 'Default', 'woocommerce-customer-order-csv-export' ),
