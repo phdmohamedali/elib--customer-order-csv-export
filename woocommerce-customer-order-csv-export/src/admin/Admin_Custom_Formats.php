@@ -17,13 +17,13 @@
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
  * @author      SkyVerge
- * @copyright   Copyright (c) 2015-2022, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright   Copyright (c) 2015-2023, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 namespace SkyVerge\WooCommerce\CSV_Export\Admin;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_10_13\SV_WC_Helper;
+use SkyVerge\WooCommerce\PluginFramework\v5_11_6\SV_WC_Helper;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -69,11 +69,9 @@ class Admin_Custom_Formats {
 	 * @since 4.7.0
 	 */
 	public function __construct() {
+		global $export_type;
 
-		if ( ! empty( $_GET['export_type'] ) ) {
-			$export_types      = wc_customer_order_csv_export()->get_export_types();
-			$this->export_type = isset( $export_types[ $_GET['export_type'] ] ) ? sanitize_text_field( $_GET['export_type'] ) : current( array_keys( $export_types ) );
-		}
+		$this->export_type = $export_type;
 
 		if ( ! empty( $_GET['format_action'] ) ) {
 			$this->action = sanitize_text_field( $_GET['format_action'] );

@@ -17,7 +17,7 @@
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
  * @author      SkyVerge
- * @copyright   Copyright (c) 2015-2022, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright   Copyright (c) 2015-2023, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -25,7 +25,7 @@ namespace SkyVerge\WooCommerce\CSV_Export;
 
 defined( 'ABSPATH' ) or exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_10_13 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_11_6 as Framework;
 use WC_Customer_Order_CSV_Export;
 
 /**
@@ -309,8 +309,7 @@ class CSV_Export_Generator extends Export_Generator {
 			$new_order_data = [];
 
 			foreach ( $line_items as $item ) {
-
-				$item_price = $this->format_decimal( $item['quantity'] && is_numeric( $item['quantity'] ) ? floatval( $item['subtotal'] ) / floatval( $item['quantity'] ) : 0 );
+				$item_price = $this->format_decimal( $item['quantity'] && is_numeric( $item['quantity'] ) ? (float) $item['subtotal'] / (float) $item['quantity'] : 0 );
 
 				$order_data['item_id']           = $item['id'];
 				$order_data['item_name']         = $item['name'];
@@ -1295,7 +1294,7 @@ class CSV_Export_Generator extends Export_Generator {
 			}
 
 			$value = $row_data[ $header_key ];
-			$value = $this->escape_cell_formulas( $value );
+			$value = is_string( $value ) ? self::escape_cell_formulas( $value ) : $value;
 
 			$data[] = $value;
 		}

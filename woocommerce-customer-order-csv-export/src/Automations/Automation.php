@@ -17,14 +17,14 @@
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
  * @author      SkyVerge
- * @copyright   Copyright (c) 2015-2022, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright   Copyright (c) 2015-2023, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 namespace SkyVerge\WooCommerce\CSV_Export\Automations;
 
 use SkyVerge\WooCommerce\CSV_Export\Export_Formats\Export_Format_Definition;
-use SkyVerge\WooCommerce\PluginFramework\v5_10_13 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_11_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -752,9 +752,9 @@ class Automation extends \WC_Data {
 
 			case \WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS:
 
-				$export_new_orders_only = $this->is_new_only_enabled();
-				// ATIF export only forlse for export all
+				// ATIF
 				$export_new_orders_only = false;
+
 				/**
 				 * Filters whether only new orders should be auto-exported for the given output type.
 				 *

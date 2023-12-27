@@ -17,7 +17,7 @@
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
  * @author      SkyVerge
- * @copyright   Copyright (c) 2015-2022, SkyVerge, Inc. (info@skyverge.com)
+ * @copyright   Copyright (c) 2015-2023, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -42,5 +42,6 @@ interface WC_Customer_Order_CSV_Export_Method {
 	 * @param \WC_Customer_Order_CSV_Export_Export|string $export the export object or a path to an export file
 	 */
 	public function perform_action( $export );
+
 
 }
